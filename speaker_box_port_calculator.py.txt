@@ -1,0 +1,33 @@
+# speaker_box_port_calculator.py
+
+import math
+
+def calculate_port_diameter(volume_liters, tuning_frequency, num_ports=1):
+    """Calculate port diameter and length for a speaker box.
+    
+    Parameters:
+        volume_liters (float): Volume of the speaker box in liters.
+        tuning_frequency (float): Desired tuning frequency in Hz.
+        num_ports (int): Number of ports (default is 1).
+        
+    Returns:
+        tuple: port_diameter (cm), port_length (cm)
+    """
+    volume_cubic_m = volume_liters / 1000
+    tuning_freq_sq = tuning_frequency ** 2
+    
+    # Example formula based on common port tuning
+    port_area = (volume_cubic_m * tuning_freq_sq) / (num_ports * 0.05)
+    port_diameter = math.sqrt(port_area / math.pi) * 100  # cm
+    port_length = (2352 * port_diameter ** 2) / (tuning_frequency ** 2 * volume_liters)  # cm
+    
+    return port_diameter, port_length
+
+# Example usage
+if __name__ == "__main__":
+    volume = float(input("Enter speaker box volume in liters: "))
+    frequency = float(input("Enter tuning frequency in Hz: "))
+    ports = int(input("Enter the number of ports: "))
+    
+    diameter, length = calculate_port_diameter(volume, frequency, ports)
+    print(f"Port Diameter: {diameter:.2f} cm, Port Length: {length:.2f} cm")
